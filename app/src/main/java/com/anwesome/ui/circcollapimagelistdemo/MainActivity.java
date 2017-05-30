@@ -18,16 +18,16 @@ public class MainActivity extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.stp);
         CircCollapImageList circCollapImageList = new CircCollapImageList(this);
         for(int i=0;i<12;i++) {
-            final int index = i;
+            final int index = i+1;
             circCollapImageList.addImage(bitmap, new OnCollapseListener() {
                 @Override
                 public void onCollapse() {
-                    Toast.makeText(MainActivity.this, String.format("%d opened",index), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, String.format("%d collapsed",index), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onOpen() {
-                    Toast.makeText(MainActivity.this, String.format("%d collapsed",index), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, String.format("%d opened",index), Toast.LENGTH_SHORT).show();
                 }
             });
         }

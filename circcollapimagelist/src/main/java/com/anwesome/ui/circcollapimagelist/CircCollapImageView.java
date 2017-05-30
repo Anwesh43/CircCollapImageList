@@ -1,5 +1,8 @@
 package com.anwesome.ui.circcollapimagelist;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -17,6 +20,7 @@ public class CircCollapImageView extends View {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Bitmap bitmap;
     private int time = 0,w,h,index;
+    private CircImage circImage;
     public CircCollapImageView(Context context, Bitmap bitmap,int index) {
         super(context);
         this.bitmap = bitmap;
@@ -25,19 +29,21 @@ public class CircCollapImageView extends View {
     }
     public void update(float factor) {
         setScaleY(0.2f+(0.8f)*factor);
+        circImage.update(factor);
         postInvalidate();
     }
     public void onDraw(Canvas canvas) {
         if(time == 0) {
             w = canvas.getWidth();
             h = canvas.getHeight();
+            circImage = new CircImage();
         }
         canvas.drawColor(Color.parseColor("#BDBDBD"));
+        circImage.drawImage(canvas);
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
-
         }
         return true;
     }
@@ -65,6 +71,43 @@ public class CircCollapImageView extends View {
             x = w/5 +(w/2-w/5)*factor;
             y = h/5 + (h/2-h/5)*factor;
             scale = 0.2f+(0.8f)*factor;
+        }
+    }
+    private class AnimationHandler extends AnimatorListenerAdapter implements ValueAnimator.AnimatorUpdateListener {
+        private int dir = 0;
+        private boolean isAnimating = false;
+        private ValueAnimator startAnim = ValueAnimator.ofFloat(0,1),endAnim = ValueAnimator.ofFloat(1,0);
+        public AnimationHandler() {
+            startAnim.setDuration(500);
+            endAnim.setDuration(500);
+            startAnim.addListener(this);
+            endAnim.addListener(this);
+            startAnim.addUpdateListener(this);
+            endAnim.addUpdateListener(this);
+        }
+        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+            update((float)valueAnimator.getAnimatedValue());
+        }
+        public void onAnimationEnd(Animator animator) {
+            if(isAnimating) {
+                if(dir == 0) {
+                }
+                else {
+
+                }
+                isAnimating = false;
+            }
+        }
+        public void start() {
+            if(!isAnimating) {
+                if(dir == 0) {
+                    startAnim.start();
+                }
+                else {
+                    endAnim.start();
+                }
+                isAnimating = true;
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -39,5 +40,31 @@ public class CircCollapImageView extends View {
 
         }
         return true;
+    }
+    private class CircImage {
+        private float x = 0,y = h/5, scale = 0.2f;
+        public CircImage() {
+            x = w/5;
+            if(index%2 == 0) {
+                x = 4 * w / 5;
+            }
+            y = h/5;
+            scale = 0.2f;
+            bitmap = Bitmap.createScaledBitmap(bitmap,w/2,h/2,true);
+        }
+        public void drawImage(Canvas canvas) {
+            canvas.save();
+            canvas.scale(scale,scale);
+            Path path = new Path();
+            path.addCircle(x,y,w/4, Path.Direction.CCW);
+            canvas.clipPath(path);
+            canvas.drawBitmap(bitmap,x-w/4,y-h/4,paint);
+            canvas.restore();
+        }
+        public void update(float factor) {
+            x = w/5 +(w/2-w/5)*factor;
+            y = h/5 + (h/2-h/5)*factor;
+            scale = 0.2f+(0.8f)*factor;
+        }
     }
 }

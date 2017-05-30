@@ -8,6 +8,7 @@ import android.hardware.display.DisplayManager;
 import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 /**
  * Created by anweshmishra on 30/05/17.
@@ -15,8 +16,25 @@ import android.view.ViewGroup;
 
 public class CircCollapImageList {
     private Activity activity;
+    private ScrollView scrollView;
+    private ImageLayout imageLayout;
+    private boolean isShown = false;
     public CircCollapImageList(Activity activity) {
         this.activity = activity;
+        scrollView = new ScrollView(activity);
+        imageLayout = new ImageLayout(activity);
+        scrollView.addView(imageLayout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
+    public void addImage(Bitmap bitmap) {
+        if(!isShown) {
+            imageLayout.addImage(bitmap);
+        }
+    }
+    public void show() {
+        if(!isShown) {
+            activity.setContentView(scrollView);
+            isShown = true;
+        }
     }
     private class ImageLayout extends ViewGroup{
         private int w,h;

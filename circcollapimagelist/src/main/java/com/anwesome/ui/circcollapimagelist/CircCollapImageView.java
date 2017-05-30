@@ -27,6 +27,7 @@ public class CircCollapImageView extends View {
         this.bitmap = bitmap;
         setScaleY(0.2f);
         this.index = index;
+        setPivotY(0);
     }
     public void update(float factor) {
         setScaleY(0.2f+(0.8f)*factor);
@@ -51,28 +52,30 @@ public class CircCollapImageView extends View {
         return true;
     }
     private class CircImage {
-        private float x = 0,y = h/5, scale = 0.2f;
+        private float x = 0,y = h/5, scale = 0.2f,initX;
         public CircImage() {
             x = w/5;
             if(index%2 == 0) {
                 x = 4 * w / 5;
             }
-            y = h/5;
+            y = h/4;
+            initX = x;
             scale = 0.2f;
             bitmap = Bitmap.createScaledBitmap(bitmap,w/2,h/2,true);
         }
         public void drawImage(Canvas canvas) {
             canvas.save();
-            canvas.scale(scale,scale);
+            canvas.translate(x,y);
+            canvas.scale(scale,1);
             Path path = new Path();
-            path.addCircle(x,y,w/4, Path.Direction.CCW);
+            path.addCircle(0,0,w/4, Path.Direction.CCW);
             canvas.clipPath(path);
-            canvas.drawBitmap(bitmap,x-w/4,y-h/4,paint);
+            canvas.drawBitmap(bitmap,-w/4,-h/4,paint);
             canvas.restore();
         }
         public void update(float factor) {
-            x = w/5 +(w/2-w/5)*factor;
-            y = h/5 + (h/2-h/5)*factor;
+            x = initX +(w/2-initX)*factor;
+            y = h/4 + (h/4)*factor;
             scale = 0.2f+(0.8f)*factor;
         }
     }
@@ -98,6 +101,7 @@ public class CircCollapImageView extends View {
                 else {
 
                 }
+                dir = dir == 0?1:0;
                 isAnimating = false;
             }
         }

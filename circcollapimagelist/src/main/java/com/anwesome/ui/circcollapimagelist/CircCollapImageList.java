@@ -70,8 +70,8 @@ public class CircCollapImageList {
             int x = w/20,y = h/20;
             for(int i=0;i<getChildCount();i++) {
                 View child = getChildAt(i);
-                child.layout(x,y,x+child.getMeasuredHeight(),y+child.getMeasuredHeight());
-                y += (child.getMeasuredHeight()+h/20);
+                child.layout(x,y,x+child.getMeasuredHeight(),(int)(y+child.getMeasuredHeight()));
+                y += (((int)(child.getMeasuredHeight()))+h/20);
             }
         }
     }

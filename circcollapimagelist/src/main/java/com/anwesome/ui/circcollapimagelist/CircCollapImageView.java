@@ -11,7 +11,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * Created by anweshmishra on 30/05/17.
@@ -51,7 +50,7 @@ public class CircCollapImageView extends View {
         time++;
     }
     public boolean onTouchEvent(MotionEvent event) {
-        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+        if(event.getAction() == MotionEvent.ACTION_DOWN && circImage != null && circImage.handleTap(event.getX(),event.getY())) {
             animationHandler.start();
         }
         return true;
@@ -82,6 +81,10 @@ public class CircCollapImageView extends View {
             x = initX +(w/2-initX)*factor;
             y = h/4 + (h/4)*factor;
             scale = 0.2f+(0.8f)*factor;
+        }
+        public boolean handleTap(float x,float y) {
+            float w = bitmap.getWidth()*scale,h = bitmap.getHeight();
+            return  x >= this.x - w/2 && x <= this.x+w/2 && y >= this.y -h/2 && y <= this.y +h/2;
         }
     }
     private class AnimationHandler extends AnimatorListenerAdapter implements ValueAnimator.AnimatorUpdateListener {

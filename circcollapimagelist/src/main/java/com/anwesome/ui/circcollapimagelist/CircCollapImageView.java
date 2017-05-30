@@ -45,7 +45,7 @@ public class CircCollapImageView extends View {
             circImage = new CircImage();
             animationHandler = new AnimationHandler();
         }
-        canvas.drawColor(Color.parseColor("#BDBDBD"));
+        canvas.drawColor(Color.parseColor("#E0E0E0"));
         circImage.drawImage(canvas);
         time++;
     }

@@ -62,7 +62,7 @@ public class CircCollapImageList {
             for(int i=0;i<getChildCount();i++) {
                 View child = getChildAt(i);
                 measureChild(child,wspec,hspec);
-                hmax += (child.getMeasuredHeight()+h/20);
+                hmax += ((int)(child.getMeasuredHeight()*child.getScaleY())+h/20);
             }
             setMeasuredDimension(w,Math.max(hmax,h));
         }
@@ -71,7 +71,7 @@ public class CircCollapImageList {
             for(int i=0;i<getChildCount();i++) {
                 View child = getChildAt(i);
                 child.layout(x,y,x+child.getMeasuredHeight(),(int)(y+child.getMeasuredHeight()));
-                y += (((int)(child.getMeasuredHeight()))+h/20);
+                y += (((int)(child.getMeasuredHeight()*child.getScaleY()))+h/20);
             }
         }
     }

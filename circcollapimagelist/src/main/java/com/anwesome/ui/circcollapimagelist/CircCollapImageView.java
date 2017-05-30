@@ -11,6 +11,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * Created by anweshmishra on 30/05/17.
@@ -33,6 +34,10 @@ public class CircCollapImageView extends View {
         setScaleY(0.2f+(0.8f)*factor);
         circImage.update(factor);
         postInvalidate();
+        if(getParent()!=null) {
+            getParent().requestLayout();
+        }
+
     }
     public void onDraw(Canvas canvas) {
         if(time == 0) {

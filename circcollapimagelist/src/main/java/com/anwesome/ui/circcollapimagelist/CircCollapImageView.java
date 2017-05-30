@@ -21,6 +21,7 @@ public class CircCollapImageView extends View {
     private Bitmap bitmap;
     private int time = 0,w,h,index;
     private CircImage circImage;
+    private AnimationHandler animationHandler;
     public CircCollapImageView(Context context, Bitmap bitmap,int index) {
         super(context);
         this.bitmap = bitmap;
@@ -37,6 +38,7 @@ public class CircCollapImageView extends View {
             w = canvas.getWidth();
             h = canvas.getHeight();
             circImage = new CircImage();
+            animationHandler = new AnimationHandler();
         }
         canvas.drawColor(Color.parseColor("#BDBDBD"));
         circImage.drawImage(canvas);
@@ -44,6 +46,7 @@ public class CircCollapImageView extends View {
     }
     public boolean onTouchEvent(MotionEvent event) {
         if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            animationHandler.start();
         }
         return true;
     }

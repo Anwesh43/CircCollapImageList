@@ -25,9 +25,9 @@ public class CircCollapImageList {
         imageLayout = new ImageLayout(activity);
         scrollView.addView(imageLayout,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
-    public void addImage(Bitmap bitmap) {
+    public void addImage(Bitmap bitmap,OnCollapseListener onCollapseListener) {
         if(!isShown) {
-            imageLayout.addImage(bitmap);
+            imageLayout.addImage(bitmap,onCollapseListener);
         }
     }
     public void show() {
@@ -52,8 +52,9 @@ public class CircCollapImageList {
                 h = size.y;
             }
         }
-        public void addImage(Bitmap bitmap) {
+        public void addImage(Bitmap bitmap,OnCollapseListener onCollapseListener) {
             CircCollapImageView circCollapImageView = new CircCollapImageView(getContext(),bitmap,getChildCount());
+            circCollapImageView.setOnCollapseListener(onCollapseListener);
             addView(circCollapImageView,new LayoutParams(9*w/10,9*w/10));
             requestLayout();
         }

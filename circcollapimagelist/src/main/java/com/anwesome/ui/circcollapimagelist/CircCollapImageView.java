@@ -19,9 +19,13 @@ import android.view.View;
 public class CircCollapImageView extends View {
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private Bitmap bitmap;
+    private OnCollapseListener onCollapseListener;
     private int time = 0,w,h,index;
     private CircImage circImage;
     private AnimationHandler animationHandler;
+    public void setOnCollapseListener(OnCollapseListener onCollapseListener) {
+        this.onCollapseListener = onCollapseListener;
+    }
     public CircCollapImageView(Context context, Bitmap bitmap,int index) {
         super(context);
         this.bitmap = bitmap;
@@ -104,10 +108,12 @@ public class CircCollapImageView extends View {
         }
         public void onAnimationEnd(Animator animator) {
             if(isAnimating) {
+                if(onCollapseListener != null)
                 if(dir == 0) {
+                    onCollapseListener.onOpen();
                 }
                 else {
-
+                    onCollapseListener.onCollapse();
                 }
                 dir = dir == 0?1:0;
                 isAnimating = false;
